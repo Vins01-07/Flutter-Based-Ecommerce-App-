@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-import '../../../models/Product.dart';
+import '../../../models/product.dart';
 
 class ProductImages extends StatefulWidget {
   const ProductImages({
@@ -12,10 +12,10 @@ class ProductImages extends StatefulWidget {
   final Product product;
 
   @override
-  _ProductImagesState createState() => _ProductImagesState();
+  ProductImagesState createState() => ProductImagesState();
 }
 
-class _ProductImagesState extends State<ProductImages> {
+class ProductImagesState extends State<ProductImages> {
   int selectedImage = 0;
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,8 @@ class _SmallProductImageState extends State<SmallProductImage> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-              color: kPrimaryColor.withOpacity(widget.isSelected ? 1 : 0)),
+              color:
+                  kPrimaryColor.withValues(alpha: widget.isSelected ? 1 : 0)),
         ),
         child: Image.asset(widget.image),
       ),
