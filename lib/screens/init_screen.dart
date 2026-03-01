@@ -5,7 +5,7 @@ import 'package:shop_app/screens/favorite/favorite_screen.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/profile/profile_screen.dart';
 
-const Color inActiveIconColor = Color(0xFFB6B6B6);
+const Color inActiveIconColor = Color(0xFF94A3B8);
 
 class InitScreen extends StatefulWidget {
   const InitScreen({super.key});
