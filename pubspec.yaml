@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.9 # help us to use SVG in our app
   provider: ^6.1.1 # for State management
+  image_picker: ^1.0.7 # for picking images from gallery or camera
+  url_launcher: ^6.2.5 # for launching emails, phones, and websites
 
 dev_dependencies:
   flutter_test:
