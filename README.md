@@ -1,62 +1,59 @@
-# Flutter E-Commerce App 🛍️📱
+# ShopVibe 🛍️📱 (formerly Tokoto)
 
-Welcome to the Flutter E-Commerce App project! This app is designed to provide a seamless shopping experience for users to browse, search, and purchase products directly from their mobile devices.
+Welcome to **ShopVibe**! This Flutter E-Commerce App project has been completely modernized and rebranded from its original Tokoto template. It features a sleek Teal/Indigo UI redesign and is fully upgraded to compile on modern Flutter 3.41+ toolchains.
 
-## Features
+## ✨ What's New?
 
-- **Product Catalog:**
-  - Browse through a wide range of products with detailed descriptions and images.
+- **Rebranded to ShopVibe:** Completely replaced the legacy orange Tokoto theme with a premium Teal & Indigo gradient design.
+- **Modernized Android Build:** Migrated from legacy imperative Gradle scripts to the modern, declarative `plugins {}` block. It now safely compiles using Kotlin 2.1.0 and AGP 8.7.0.
+- **Integrated Testing:** Added automated widget testing that validates the Splash screen, Brand texts, and App Launch flow.
 
-- **Search Functionality:**
-  - Easily search for specific products by name, category, or keyword.
+## 🚀 How to Run the Project
 
-- **Shopping Cart:**
-  - Add products to the cart, update quantities, and proceed to checkout.
+You do **not** need Android Studio to run this app if you just want to test it locally on the web.
 
-- **Secure Checkout:**
-  - Integrated payment options for a secure and hassle-free checkout process.
+### Option 1: Run on Web Browser (No Android SDK required)
 
-- **User Authentication:**
-  - Allow users to create accounts, log in, and manage their profiles.
+If you just want to view the UI and test the functionality, run it via the pre-installed Microsoft Edge or Chrome engines:
 
-## Technologies Used
+```bash
+flutter run -d edge
+# or
+flutter run -d chrome
+```
 
-- **Flutter:**
-  - UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.
+### Option 2: Run on Android (Requires Android SDK)
 
-- **Firebase:**
-  - Backend services for authentication, database, and hosting.
+To build an APK or run on a physical Android device/emulator:
 
-- **Third-Party Plugins:**
+1. Ensure the **Android SDK** and **Android SDK Command-line Tools** are installed (usually via Android Studio).
+2. Accept the licenses: `flutter doctor --android-licenses`
+3. Connect your device (or start an emulator) and run:
 
+```bash
+flutter run
+```
 
-### Video Preview of the Shop template
+### Option 3: Run Widget Tests
 
-![Preview](/intro.gif)
+To verify everything is working under the hood without launching a device:
 
-## Screens it contains:
+```bash
+flutter test
+```
 
-=> Onboarding
-=> Login
-=> Forgot Password
-=> Sign Up
-=> Complete Profile
-=> OTP Verification
-=> Home Page
-=> Product Details
-=> Order
-=> Profile (added)
-=> Bottom Navigation Bar (added)
+## 📱 Screens Included:
 
-Now it contains all the screen, thanks for your love and support 🙏 
+- Splash / Onboarding
+- Login & Sign Up
+- Forgot Password
+- Complete Profile & OTP Verification
+- Home Page (with interactive category carousels & banners)
+- Product Details
+- Cart & Checkout
+- Profile
+- Bottom Navigation Bar
 
-## Photos
-![Preview](/1.png)
-![Preview](2.png)
-![Preview](3.png)
-![Preview](4.png)
-![Preview](5.png)
-![Preview](6.png)
-![Preview](7.png)
+---
 
-## Preview
+_Powered by Flutter._

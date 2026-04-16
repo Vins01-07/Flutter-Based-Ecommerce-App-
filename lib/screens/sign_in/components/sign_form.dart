@@ -6,6 +6,8 @@ import '../../../constants.dart';
 import '../../../helper/keyboard.dart';
 import '../../forgot_password/forgot_password_screen.dart';
 import '../../login_success/login_success_screen.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/user_provider.dart';
 
 class SignForm extends StatefulWidget {
   const SignForm({super.key});
@@ -134,6 +136,9 @@ class SignFormState extends State<SignForm> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
+                if (email != null) {
+                  context.read<UserProvider>().login(email!);
+                }
                 // if all are valid then go to success screen
                 KeyboardUtil.hideKeyboard(context);
                 Navigator.pushNamed(context, LoginSuccessScreen.routeName);

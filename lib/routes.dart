@@ -9,7 +9,12 @@ import 'screens/home/home_screen.dart';
 import 'screens/init_screen.dart';
 import 'screens/login_success/login_success_screen.dart';
 import 'screens/otp/otp_screen.dart';
+import 'screens/profile/help_center_screen.dart';
+import 'screens/profile/notifications_screen.dart';
+import 'screens/profile/privacy_policy_screen.dart';
 import 'screens/profile/profile_screen.dart';
+import 'screens/profile/settings_screen.dart';
+import 'screens/profile/user_account_screen.dart';
 import 'screens/sign_in/sign_in_screen.dart';
 import 'screens/sign_up/sign_up_screen.dart';
 import 'screens/splash/splash_screen.dart';
@@ -30,4 +35,9 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => const DetailsScreen(),
   CartScreen.routeName: (context) => const CartScreen(),
   ProfileScreen.routeName: (context) => const ProfileScreen(),
+  UserAccountScreen.routeName: (context) => const UserAccountScreen(),
+  NotificationsScreen.routeName: (context) => const NotificationsScreen(),
+  SettingsScreen.routeName: (context) => const SettingsScreen(),
+  HelpCenterScreen.routeName: (context) => const HelpCenterScreen(),
+  PrivacyPolicyScreen.routeName: (context) => const PrivacyPolicyScreen(),
 };
