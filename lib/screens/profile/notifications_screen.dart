@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/providers/notification_provider.dart';
 
 class NotificationsScreen extends StatelessWidget {
   static String routeName = "/notifications";
@@ -11,50 +13,30 @@ class NotificationsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Notifications"),
       ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        children: [
-          _buildNotificationItem(
-            context: context,
-            title: "Flash Sale Alert! ⚡",
-            description: "Get up to 70% off on all electronic items for the next 2 hours only!",
-            time: "2 mins ago",
-            icon: Icons.flash_on,
-            color: Colors.orange,
-          ),
-          _buildNotificationItem(
-            context: context,
-            title: "Order Shipped 📦",
-            description: "Your order #7890 has been shipped and is on its way to you.",
-            time: "1 hour ago",
-            icon: Icons.local_shipping,
-            color: Colors.blue,
-          ),
-          _buildNotificationItem(
-            context: context,
-            title: "New Collection Arrived ✨",
-            description: "Check out the new summer collection specially curated for you.",
-            time: "5 hours ago",
-            icon: Icons.new_releases,
-            color: Colors.purple,
-          ),
-          _buildNotificationItem(
-            context: context,
-            title: "Payment Successful ✅",
-            description: "Thank you for your purchase! Your payment of \$120.50 was successful.",
-            time: "Yesterday",
-            icon: Icons.payment,
-            color: Colors.green,
-          ),
-          _buildNotificationItem(
-            context: context,
-            title: "Special Voucher for You 🎁",
-            description: "Use code SHOPVIBE20 to get extra 20% discount on your next order.",
-            time: "2 days ago",
-            icon: Icons.card_giftcard,
-            color: Colors.pink,
-          ),
-        ],
+      body: Consumer<NotificationProvider>(
+        builder: (context, provider, child) {
+          final items = provider.notifications;
+          if (items.isEmpty) {
+            return const Center(
+              child: Text("No new notifications.", style: TextStyle(color: Colors.white70)),
+            );
+          }
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final note = items[index];
+              return _buildNotificationItem(
+                context: context,
+                title: note.title,
+                description: note.description,
+                time: note.time,
+                icon: note.icon,
+                color: note.color,
+              );
+            },
+          );
+        },
       ),
     );
   }

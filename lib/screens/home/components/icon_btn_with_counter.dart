@@ -28,10 +28,20 @@ class IconBtnWithCounter extends StatelessWidget {
             height: 46,
             width: 46,
             decoration: BoxDecoration(
-              color: kSecondaryColor.withValues(alpha: 0.1),
+              color: const Color(0xFF1E293B),
               shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.06),
+                width: 1,
+              ),
             ),
-            child: SvgPicture.asset(svgSrc),
+            child: SvgPicture.asset(
+              svgSrc,
+              colorFilter: ColorFilter.mode(
+                Colors.white.withValues(alpha: 0.7),
+                BlendMode.srcIn,
+              ),
+            ),
           ),
           if (numOfitem != 0)
             Positioned(
@@ -41,18 +51,25 @@ class IconBtnWithCounter extends StatelessWidget {
                 height: 20,
                 width: 20,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFF4848),
+                  color: kPrimaryColor,
                   shape: BoxShape.circle,
-                  border: Border.all(width: 1.5, color: Colors.white),
+                  border: Border.all(width: 1.5, color: const Color(0xFF0F172A)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: kPrimaryColor.withValues(alpha: 0.6),
+                      blurRadius: 6,
+                      spreadRadius: 1,
+                    ),
+                  ],
                 ),
                 child: Center(
                   child: Text(
                     "$numOfitem",
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 11,
                       height: 1,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -63,3 +80,4 @@ class IconBtnWithCounter extends StatelessWidget {
     );
   }
 }
+

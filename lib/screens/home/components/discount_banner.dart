@@ -19,6 +19,14 @@ class DiscountBanner extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: kPrimaryGradientColor,
         borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: kPrimaryColor.withValues(alpha: 0.4),
+            blurRadius: 20,
+            spreadRadius: 2,
+            offset: const Offset(0, 10),
+          )
+        ]
       ),
       child: const Text.rich(
         TextSpan(

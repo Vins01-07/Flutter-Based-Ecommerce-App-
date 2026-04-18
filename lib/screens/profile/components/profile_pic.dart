@@ -89,7 +89,7 @@ class _ProfilePicState extends State<ProfilePic> with SingleTickerProviderStateM
                       borderRadius: BorderRadius.circular(50),
                       side: const BorderSide(color: Colors.white),
                     ),
-                    backgroundColor: const Color(0xFFF5F6F9),
+                    backgroundColor: const Color(0xFF1E293B),
                   ),
                   onPressed: _pickImage,
                   child: SvgPicture.asset("assets/icons/Camera Icon.svg"),

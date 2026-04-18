@@ -8,35 +8,60 @@ class ColorDots extends StatelessWidget {
   const ColorDots({
     Key? key,
     required this.product,
+    required this.selectedColor,
+    required this.quantity,
+    required this.onColorSelected,
+    required this.onQuantityChanged,
   }) : super(key: key);
 
   final Product product;
+  final int selectedColor;
+  final int quantity;
+  final ValueChanged<int> onColorSelected;
+  final ValueChanged<int> onQuantityChanged;
 
   @override
   Widget build(BuildContext context) {
-    // Now this is fixed and only for demo
-    int selectedColor = 3;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           ...List.generate(
             product.colors.length,
-            (index) => ColorDot(
-              color: product.colors[index],
-              isSelected: index == selectedColor,
+            (index) => GestureDetector(
+              onTap: () => onColorSelected(index),
+              child: ColorDot(
+                color: product.colors[index],
+                isSelected: index == selectedColor,
+              ),
             ),
           ),
           const Spacer(),
           RoundedIconBtn(
             icon: Icons.remove,
-            press: () {},
+            press: () {
+              if (quantity > 1) {
+                onQuantityChanged(quantity - 1);
+              }
+            },
           ),
-          const SizedBox(width: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              "$quantity",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
           RoundedIconBtn(
             icon: Icons.add,
             showShadow: true,
-            press: () {},
+            press: () {
+              onQuantityChanged(quantity + 1);
+            },
           ),
         ],
       ),

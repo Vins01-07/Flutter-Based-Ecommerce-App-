@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
@@ -18,6 +19,7 @@ class SignUpFormState extends State<SignUpForm> {
   String? password;
   String? confirmPassword;
   bool remember = false;
+  bool isLoading = false;
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -137,14 +139,41 @@ class SignUpFormState extends State<SignUpForm> {
           FormError(errors: errors),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
+            onPressed: isLoading ? null : () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                setState(() {
+                  isLoading = true;
+                });
+                try {
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    email: email!,
+                    password: password!,
+                  );
+                  // if all are valid then go to success screen
+                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'weak-password') {
+                    addError(error: 'The password provided is too weak.');
+                  } else if (e.code == 'email-already-in-use') {
+                    addError(error: 'The account already exists for that email.');
+                  } else {
+                    addError(error: e.message ?? 'An unknown error occurred');
+                  }
+                } catch (e) {
+                  addError(error: e.toString());
+                } finally {
+                  if (mounted) {
+                    setState(() {
+                      isLoading = false;
+                    });
+                  }
+                }
               }
             },
-            child: const Text("Continue"),
+            child: isLoading 
+                ? const CircularProgressIndicator(color: Colors.white) 
+                : const Text("Continue"),
           ),
         ],
       ),

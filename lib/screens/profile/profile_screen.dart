@@ -44,31 +44,8 @@ class ProfileScreen extends StatelessWidget {
               press: () {
                 Navigator.push(
                   context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        const NotificationsScreen(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      const begin = Offset(0.0, 1.0);
-                      const end = Offset.zero;
-                      const curve = Curves.easeInOutBack;
-
-                      var tween = Tween(begin: begin, end: end)
-                          .chain(CurveTween(curve: curve));
-
-                      return SlideTransition(
-                        position: animation.drive(tween),
-                        child: FadeTransition(
-                          opacity: animation,
-                          child: ScaleTransition(
-                            scale: Tween<double>(begin: 0.8, end: 1.0)
-                                .animate(animation),
-                            child: child,
-                          ),
-                        ),
-                      );
-                    },
-                    transitionDuration: const Duration(milliseconds: 600),
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationsScreen(),
                   ),
                 );
               },
@@ -105,23 +82,10 @@ class ProfileScreen extends StatelessWidget {
       required String text,
       required String icon,
       required VoidCallback press}) {
-    return TweenAnimationBuilder(
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: Duration(milliseconds: 400 + (index * 100)),
-      builder: (context, double value, child) {
-        return Opacity(
-          opacity: value,
-          child: Transform.translate(
-            offset: Offset(0, 50 * (1 - value)),
-            child: child,
-          ),
-        );
-      },
-      child: ProfileMenu(
-        text: text,
-        icon: icon,
-        press: press,
-      ),
+    return ProfileMenu(
+      text: text,
+      icon: icon,
+      press: press,
     );
   }
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../components/socal_card.dart';
 import '../../constants.dart';
+import '../../services/auth_helper.dart';
+import '../complete_profile/complete_profile_screen.dart';
 import 'components/sign_up_form.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -27,6 +29,7 @@ class SignUpScreen extends StatelessWidget {
                   const Text(
                     "Complete your details or continue \nwith social media",
                     textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white54),
                   ),
                   const SizedBox(height: 16),
                   const SignUpForm(),
@@ -36,7 +39,20 @@ class SignUpScreen extends StatelessWidget {
                     children: [
                       SocalCard(
                         icon: "assets/icons/google-icon.svg",
-                        press: () {},
+                        press: () async {
+                          try {
+                            final userCredential = await AuthHelper.signInWithGoogle();
+                            if (userCredential != null && context.mounted) {
+                              Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                            }
+                          } catch (e) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Google Sign-In failed: $e')),
+                              );
+                            }
+                          }
+                        },
                       ),
                       SocalCard(
                         icon: "assets/icons/facebook-2.svg",

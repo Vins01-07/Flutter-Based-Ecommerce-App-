@@ -78,7 +78,7 @@ class _SmallProductImageState extends State<SmallProductImage> {
         height: 48,
         width: 48,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFF1E293B),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
               color:

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '../providers/product_provider.dart';
 
 import '../constants.dart';
 import '../models/product.dart';
@@ -31,8 +34,19 @@ class ProductCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: kSecondaryColor.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
+                  color: const Color(0xFF1E293B),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.05),
+                    width: 1,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.35),
+                      blurRadius: 15,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
                 ),
                 child: Image.asset(product.images[0]),
               ),
@@ -40,23 +54,30 @@ class ProductCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               product.title,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: GoogleFonts.outfit(
+                color: Colors.white70,
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
               maxLines: 2,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "\$${product.price}",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                  "₹${product.price}",
+                  style: GoogleFonts.outfit(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
                     color: kPrimaryColor,
                   ),
                 ),
                 InkWell(
                   borderRadius: BorderRadius.circular(50),
-                  onTap: () {},
+                  onTap: () {
+                    Provider.of<ProductProvider>(context, listen: false)
+                        .toggleFavoriteStatus(product.id);
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(6),
                     height: 24,
@@ -64,7 +85,7 @@ class ProductCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: product.isFavourite
                           ? kPrimaryColor.withValues(alpha: 0.15)
-                          : kSecondaryColor.withValues(alpha: 0.1),
+                          : Colors.white.withValues(alpha: 0.06),
                       shape: BoxShape.circle,
                     ),
                     child: SvgPicture.asset(
@@ -72,7 +93,7 @@ class ProductCard extends StatelessWidget {
                       colorFilter: ColorFilter.mode(
                           product.isFavourite
                               ? const Color(0xFFFF4848)
-                              : const Color(0xFFDBDEE4),
+                              : Colors.white24,
                           BlendMode.srcIn),
                     ),
                   ),

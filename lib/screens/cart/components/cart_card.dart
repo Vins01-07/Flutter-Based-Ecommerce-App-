@@ -7,9 +7,11 @@ class CartCard extends StatelessWidget {
   const CartCard({
     Key? key,
     required this.cart,
+    this.onDiscard,
   }) : super(key: key);
 
   final Cart cart;
+  final VoidCallback? onDiscard;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class CartCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: const Color(0xFFF5F6F9),
+                color: const Color(0xFF1E293B),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Image.asset(cart.product.images[0]),
@@ -30,29 +32,36 @@ class CartCard extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 20),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              cart.product.title,
-              style: const TextStyle(color: Colors.black, fontSize: 16),
-              maxLines: 2,
-            ),
-            const SizedBox(height: 8),
-            Text.rich(
-              TextSpan(
-                text: "\$${cart.product.price}",
-                style: const TextStyle(
-                    fontWeight: FontWeight.w600, color: kPrimaryColor),
-                children: [
-                  TextSpan(
-                      text: " x${cart.numOfItem}",
-                      style: Theme.of(context).textTheme.bodyLarge),
-                ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                cart.product.title,
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+                maxLines: 2,
               ),
-            )
-          ],
-        )
+              const SizedBox(height: 8),
+              Text.rich(
+                TextSpan(
+                  text: "₹${cart.product.price}",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, color: kPrimaryColor),
+                  children: [
+                    TextSpan(
+                        text: " x${cart.numOfItem}",
+                        style: Theme.of(context).textTheme.bodyLarge),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        if (onDiscard != null)
+          IconButton(
+            icon: const Icon(Icons.delete_outline, color: Colors.grey),
+            onPressed: onDiscard,
+          ),
       ],
     );
   }

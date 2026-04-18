@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color(0xFF0D9488);
-const kPrimaryLightColor = Color(0xFFCCFBF1);
+const kPrimaryColor = Color(0xFF00FFCC); // Neon Teal
+const kPrimaryLightColor = Color(0xFF1E293B);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
-  colors: [Color(0xFF14B8A6), Color(0xFF6366F1)],
+  colors: [Color(0xFF00FFCC), Color(0xFF6366F1)], // Teal to Indigo Glow
 );
 const kSecondaryColor = Color(0xFF6366F1);
-const kTextColor = Color(0xFF1E293B);
+const kTextColor = Color(0xFFF8FAFC);
 
 const kAnimationDuration = Duration(milliseconds: 200);
 
 const headingStyle = TextStyle(
   fontSize: 24,
   fontWeight: FontWeight.bold,
-  color: Color(0xFF1E293B),
+  color: Colors.white,
   height: 1.5,
 );
 

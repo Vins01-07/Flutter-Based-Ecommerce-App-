@@ -20,9 +20,10 @@ class SocalCard extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         height: 40,
         width: 40,
-        decoration: const BoxDecoration(
-          color: Color(0xFFF5F6F9),
+        decoration: BoxDecoration(
+          color: const Color(0xFF1E293B),
           shape: BoxShape.circle,
+          border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
         ),
         child: SvgPicture.asset(icon!),
       ),

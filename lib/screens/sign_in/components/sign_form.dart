@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
@@ -21,6 +22,7 @@ class SignFormState extends State<SignForm> {
   String? email;
   String? password;
   bool? remember = false;
+  bool isLoading = false;
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -133,18 +135,46 @@ class SignFormState extends State<SignForm> {
           FormError(errors: errors),
           const SizedBox(height: 16),
           ElevatedButton(
-            onPressed: () {
+            onPressed: isLoading ? null : () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                if (email != null) {
-                  context.read<UserProvider>().login(email!);
+                setState(() {
+                  isLoading = true;
+                });
+                
+                try {
+                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: email!,
+                    password: password!,
+                  );
+                  if (email != null) {
+                    context.read<UserProvider>().login(email!);
+                  }
+                  // if all are valid then go to success screen
+                  KeyboardUtil.hideKeyboard(context);
+                  Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'user-not-found') {
+                    addError(error: 'No user found for that email.');
+                  } else if (e.code == 'wrong-password') {
+                    addError(error: 'Wrong password provided for that user.');
+                  } else {
+                    addError(error: e.message ?? 'An unknown error occurred');
+                  }
+                } catch (e) {
+                  addError(error: e.toString());
+                } finally {
+                  if (mounted) {
+                    setState(() {
+                      isLoading = false;
+                    });
+                  }
                 }
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
               }
             },
-            child: const Text("Continue"),
+            child: isLoading 
+                ? const CircularProgressIndicator(color: Colors.white) 
+                : const Text("Continue"),
           ),
         ],
       ),

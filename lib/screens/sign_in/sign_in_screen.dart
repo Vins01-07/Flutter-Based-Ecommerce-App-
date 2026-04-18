@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../components/no_account_text.dart';
 import '../../components/socal_card.dart';
+import '../../services/auth_helper.dart';
+import '../login_success/login_success_screen.dart';
 import 'components/sign_form.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -26,7 +28,7 @@ class SignInScreen extends StatelessWidget {
                   const Text(
                     "Welcome Back",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -34,6 +36,7 @@ class SignInScreen extends StatelessWidget {
                   const Text(
                     "Sign in with your email and password  \nor continue with social media",
                     textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white54),
                   ),
                   const SizedBox(height: 16),
                   const SignForm(),
@@ -43,7 +46,20 @@ class SignInScreen extends StatelessWidget {
                     children: [
                       SocalCard(
                         icon: "assets/icons/google-icon.svg",
-                        press: () {},
+                        press: () async {
+                          try {
+                            final userCredential = await AuthHelper.signInWithGoogle();
+                            if (userCredential != null && context.mounted) {
+                              Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                            }
+                          } catch (e) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Google Sign-In failed: $e')),
+                              );
+                            }
+                          }
+                        },
                       ),
                       SocalCard(
                         icon: "assets/icons/facebook-2.svg",

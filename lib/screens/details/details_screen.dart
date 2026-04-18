@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/screens/cart/cart_screen.dart';
+import '../../providers/cart_provider.dart';
 
 import '../../models/product.dart';
 import 'components/color_dots.dart';
@@ -8,20 +10,29 @@ import 'components/product_description.dart';
 import 'components/product_images.dart';
 import 'components/top_rounded_container.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
   static String routeName = "/details";
 
   const DetailsScreen({super.key});
+
+  @override
+  State<DetailsScreen> createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
+  int quantity = 1;
+  int selectedColor = 0;
 
   @override
   Widget build(BuildContext context) {
     final ProductDetailsArguments agrs =
         ModalRoute.of(context)!.settings.arguments as ProductDetailsArguments;
     final product = agrs.product;
+    
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      backgroundColor: const Color(0xFFF5F6F9),
+      backgroundColor: const Color(0xFF0F172A),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -35,11 +46,11 @@ class DetailsScreen extends StatelessWidget {
               shape: const CircleBorder(),
               padding: EdgeInsets.zero,
               elevation: 0,
-              backgroundColor: Colors.white,
+              backgroundColor: const Color(0xFF1E293B),
             ),
             child: const Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.black,
+              color: Colors.white,
               size: 20,
             ),
           ),
@@ -52,7 +63,7 @@ class DetailsScreen extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: const Color(0xFF1E293B),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Row(
@@ -61,7 +72,7 @@ class DetailsScreen extends StatelessWidget {
                       "4.7",
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black,
+                        color: Color(0xFF00FFCC),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -78,18 +89,31 @@ class DetailsScreen extends StatelessWidget {
         children: [
           ProductImages(product: product),
           TopRoundedContainer(
-            color: Colors.white,
+            color: const Color(0xFF1E293B),
             child: Column(
               children: [
                 ProductDescription(
                   product: product,
-                  pressOnSeeMore: () {},
                 ),
                 TopRoundedContainer(
-                  color: const Color(0xFFF6F7F9),
+                  color: const Color(0xFF162032),
                   child: Column(
                     children: [
-                      ColorDots(product: product),
+                      ColorDots(
+                        product: product,
+                        selectedColor: selectedColor,
+                        quantity: quantity,
+                        onColorSelected: (val) {
+                          setState(() {
+                            selectedColor = val;
+                          });
+                        },
+                        onQuantityChanged: (val) {
+                          setState(() {
+                            quantity = val;
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -99,12 +123,14 @@ class DetailsScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: TopRoundedContainer(
-        color: Colors.white,
+        color: const Color(0xFF1E293B),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: ElevatedButton(
               onPressed: () {
+                Provider.of<CartProvider>(context, listen: false).addToCart(product, quantity);
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Added to Cart Successfully!"), duration: Duration(seconds: 2)));
                 Navigator.pushNamed(context, CartScreen.routeName);
               },
               child: const Text("Add To Cart"),

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "404722517873",
+    "project_id": "fluuter-project-f51a8",
+    "storage_bucket": "fluuter-project-f51a8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404722517873:android:627c1e4087b0bd11d558d0",
+        "android_client_info": {
+          "package_name": "com.example.shop_vibe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZb3RnfNBxdiCraAchG1yVogmrNsW28pE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

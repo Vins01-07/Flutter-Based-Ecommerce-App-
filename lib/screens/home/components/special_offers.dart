@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/screens/products/products_screen.dart';
+import '../../../providers/product_provider.dart';
 
 import 'section_title.dart';
 
@@ -23,20 +25,19 @@ class SpecialOffers extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
-                category: "Smartphone",
-                numOfBrands: 18,
-                press: () {
-                  Navigator.pushNamed(context, ProductsScreen.routeName);
-                },
-              ),
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 3.png",
-                category: "Fashion",
-                numOfBrands: 24,
-                press: () {
-                  Navigator.pushNamed(context, ProductsScreen.routeName);
+              ...List.generate(
+                Provider.of<ProductProvider>(context).specialOffers.length,
+                (index) {
+                  final offer = Provider.of<ProductProvider>(context).specialOffers[index];
+                  return SpecialOfferCard(
+                    image: offer.image,
+                    category: offer.category,
+                    numOfBrands: offer.numOfBrands,
+                    press: () {
+                      Provider.of<ProductProvider>(context, listen: false).filterByCategory(offer.category);
+                      Navigator.pushNamed(context, ProductsScreen.routeName);
+                    },
+                  );
                 },
               ),
               const SizedBox(width: 20),
@@ -67,50 +68,82 @@ class SpecialOfferCard extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20),
       child: GestureDetector(
         onTap: press,
-        child: SizedBox(
-          width: 242,
-          height: 100,
+        child: Container(
+          width: 260,
+          height: 110,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: const Color(0xFF00FFCC).withValues(alpha: 0.15),
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.4),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Stack(
               children: [
-                Image.asset(
-                  image,
-                  fit: BoxFit.cover,
+                Positioned.fill(
+                  child: Image.asset(
+                    image,
+                    fit: BoxFit.cover,
+                  ),
                 ),
+                // Deep cinematic overlay
                 Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                       colors: [
-                        Colors.black54,
-                        Colors.black38,
-                        Colors.black26,
-                        Colors.transparent,
+                        Colors.black.withValues(alpha: 0.75),
+                        Colors.black.withValues(alpha: 0.3),
+                        const Color(0xFF00FFCC).withValues(alpha: 0.08),
                       ],
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
+                    horizontal: 18,
+                    vertical: 14,
                   ),
-                  child: Text.rich(
-                    TextSpan(
-                      style: const TextStyle(color: Colors.white),
-                      children: [
-                        TextSpan(
-                          text: "$category\n",
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        category,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF00FFCC).withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          "$numOfBrands Brands",
                           style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF00FFCC),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        TextSpan(text: "$numOfBrands Brands")
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ],
