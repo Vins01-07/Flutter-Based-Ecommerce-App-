@@ -52,25 +52,22 @@ class FirestoreService {
       for (var product in demoProducts) {
         // Use combination of title and id to ensure uniqueness since mock data repeats IDs
         final docId = 'product_${product.id}_${product.title.replaceAll(' ', '_')}';
-        final doc = await productsRef.doc(docId).get();
         
-        if (!doc.exists) {
-          // Identify category based on the title for the new alternating UI loop!
-          String assumedCategory = (product.title.contains("PS4") || product.title.contains("Logitech")) ? "Smartphone" : "Fashion";
-          
-          await productsRef.doc(docId).set({
-            'id': product.id,
-            'title': product.title,
-            'description': product.description,
-            'price': product.price,
-            'rating': product.rating,
-            'images': product.images,
-            'colors': product.colors.map((c) => c.value.toRadixString(16)).toList(),
-            'isFavourite': product.isFavourite,
-            'isPopular': product.isPopular,
-            'category': assumedCategory, 
-          });
-        }
+        // Identify category based on the title for the new alternating UI loop!
+        String assumedCategory = (product.title.contains("PS4") || product.title.contains("Logitech")) ? "Smartphone" : "Fashion";
+        
+        await productsRef.doc(docId).set({
+          'id': product.id,
+          'title': product.title,
+          'description': product.description,
+          'price': product.price,
+          'rating': product.rating,
+          'images': product.images,
+          'colors': product.colors.map((c) => c.value.toRadixString(16)).toList(),
+          'isFavourite': product.isFavourite,
+          'isPopular': product.isPopular,
+          'category': assumedCategory, 
+        });
       }
 
       // Seed offers
