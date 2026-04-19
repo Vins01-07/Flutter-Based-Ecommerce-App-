@@ -1,12 +1,13 @@
-# ShopVibe 🛍️📱 (formerly Tokoto)
+# ShopVibe 🛍️📱
 
-Welcome to **ShopVibe**! This Flutter E-Commerce App project has been completely modernized and rebranded from its original Tokoto template. It features a sleek Teal/Indigo UI redesign and is fully upgraded to compile on modern Flutter 3.41+ toolchains.
+Welcome to **ShopVibe**! ShopVibe is a premium, full-featured E-Commerce application built with Flutter. It features a modern Teal and Indigo visual identity, designed to provide a seamless shopping experience with high-performance animations and a robust feature set.
 
-## ✨ What's New?
+## ✨ Key Features
 
-- **Rebranded to ShopVibe:** Completely replaced the legacy orange Tokoto theme with a premium Teal & Indigo gradient design.
-- **Modernized Android Build:** Migrated from legacy imperative Gradle scripts to the modern, declarative `plugins {}` block. It now safely compiles using Kotlin 2.1.0 and AGP 8.7.0.
-- **Integrated Testing:** Added automated widget testing that validates the Splash screen, Brand texts, and App Launch flow.
+- **Premium Design System:** Built from the ground up with a custom Teal & Indigo gradient theme, ensuring a modern and professional aesthetic.
+- **State-of-the-Art Architecture:** Utilizes modular screens and efficient state management for a production-grade experience.
+- **Modern Build System:** Fully compatible with Flutter 3.41+ and Android's latest declarative build systems (Gradle 8.7, Kotlin 2.1.0).
+- **Comprehensive Testing:** Includes automated widget tests for core screens and navigation flows to ensure stability.
 
 ## 🚀 How to Run the Project
 
